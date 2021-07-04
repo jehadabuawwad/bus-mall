@@ -1,6 +1,5 @@
 'use strict';
 
-
 Item.objectsContainer = [];
 
 function Item(productName, sourceLink) {
@@ -10,16 +9,12 @@ function Item(productName, sourceLink) {
     this.clickTimes = 0;
     this.clickPerShowPercantage = 0;
     Item.objectsContainer.push(this);
-
 };
-
 
 Item.prototype.clickPerVeiwsPercantagefn = function() {
     this.clickPerShowPercantage = Math.round((this.clickTimes * 100) / this.shownTimes);
 
-
 };
-
 
 new Item('bag', 'images/bag.jpg');
 new Item('banana', 'images/banana.jpg');
@@ -41,11 +36,9 @@ new Item('unicorn', 'images/unicorn.jpg');
 new Item('water-can', 'images/water-can.jpg');
 new Item('wine-glass', 'images/wine-glass.jpg');
 
-
 /*---------------------------------------- Rendering Images ----------------------------------------*/
 function randomizer() {
-    return Math.floor(Math.random() * 19);
-    //return Math.floor(Math.random() * Item.objectsContainer.length);
+    return Math.floor(Math.random() * Item.objectsContainer.length);
 };
 
 let leftElement = document.getElementById('leftElement');
@@ -74,6 +67,10 @@ function renderThreeImages() {
     Item.objectsContainer[leftIndex].shownTimes++;
     Item.objectsContainer[centerIndex].shownTimes++;
     Item.objectsContainer[rightIndex].shownTimes++;
+
+    Item.objectsContainer[leftIndex].clickPerVeiwsPercantagefn();
+    Item.objectsContainer[centerIndex].clickPerVeiwsPercantagefn();
+    Item.objectsContainer[rightIndex].clickPerVeiwsPercantagefn();
     console.log(Item.objectsContainer);
 };
 
@@ -121,7 +118,6 @@ resultShowButton.addEventListener('click', renderResults);
 
 function renderResults() {
 
-
     for (let i = 0; i < Item.objectsContainer.length; i++) {
         let UnorderedList = document.getElementById('UnorderedList');
         let list = document.createElement('li');
@@ -133,6 +129,5 @@ function renderResults() {
     resultShowButton.removeEventListener('click', renderResults);
     resultShowButton.removeEventListener('click', renderResults);
     resultFrame.style.display = "block";
-
 
 };
