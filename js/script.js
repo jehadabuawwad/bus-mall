@@ -15,7 +15,7 @@ function Item(productName, sourceLink) {
 
 
 Item.prototype.clickPerVeiwsPercantagefn = function() {
-    this.clickPerShowPercantage = Math.floor((this.clickTimes * 100) / this.shownTimes);
+    this.clickPerShowPercantage = Math.round((this.clickTimes * 100) / this.shownTimes);
 
 
 };
@@ -44,7 +44,8 @@ new Item('wine-glass', 'images/wine-glass.jpg');
 
 /*---------------------------------------- Rendering Images ----------------------------------------*/
 function randomizer() {
-    return Math.floor(Math.random() * Item.objectsContainer.length);
+    return Math.floor(Math.random() * 19);
+    //return Math.floor(Math.random() * Item.objectsContainer.length);
 };
 
 let leftElement = document.getElementById('leftElement');
@@ -60,7 +61,6 @@ function renderThreeImages() {
     leftIndex = randomizer();
     centerIndex = randomizer();
     rightIndex = randomizer();
-
     while (leftIndex == centerIndex || centerIndex == rightIndex || rightIndex == leftIndex) {
         leftIndex = randomizer();
         centerIndex = randomizer();
@@ -93,16 +93,20 @@ function handleClick(event) {
     if (counter <= maxAttempts) {
 
         if (event.target.id === 'leftElement') {
-            Item.objectsContainer[leftIndex].clickTimes++;
-            Item.objectsContainer[leftIndex].clickPerVeiwsPercantagefn();
+
+            Item.objectsContainer[leftIndex].clickTimes += 1;
 
         } else if (event.target.id === 'centerElement') {
-            Item.objectsContainer[centerIndex].clickTimes++;
-            Item.objectsContainer[centerIndex].clickPerVeiwsPercantagefn();
+
+            Item.objectsContainer[centerIndex].clickTimes += 1;
         } else if (event.target.id === 'rightElement') {
-            Item.objectsContainer[rightIndex].clickTimes++;
-            Item.objectsContainer[rightIndex].clickPerVeiwsPercantagefn();
+
+            Item.objectsContainer[rightIndex].clickTimes += 1;
         }
+
+        Item.objectsContainer[leftIndex].clickPerVeiwsPercantagefn();
+        Item.objectsContainer[centerIndex].clickPerVeiwsPercantagefn();
+        Item.objectsContainer[rightIndex].clickPerVeiwsPercantagefn();
         renderThreeImages();
     } else {
         resultShowButton.style.display = "block";
@@ -122,7 +126,7 @@ function renderResults() {
         let UnorderedList = document.getElementById('UnorderedList');
         let list = document.createElement('li');
         UnorderedList.appendChild(list);
-        list.textContent = `${ Item.objectsContainer[i].productName} : Picked (${Item.objectsContainer[i].clickTimes}) Seen (${Item.objectsContainer[i].shownTimes}) percentage (${Item.objectsContainer[i].clickPerShowPercantage}%) `
+        list.textContent = `${Item.objectsContainer[i].productName} : Picked (${Item.objectsContainer[i].clickTimes}) Seen (${Item.objectsContainer[i].shownTimes}) percentage (${Item.objectsContainer[i].clickPerShowPercantage}%) `
 
     }
     resultShowButton.removeEventListener('click', renderResults);
