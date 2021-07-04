@@ -1,0 +1,91 @@
+body {
+    background-image: url('https://media.giphy.com/media/g64UPbSmTYtYQ/giphy.gif');
+    background-repeat: repeat-x;
+    background-position: right bottom;
+    height: 930px;
+    background-color: #fffffe;
+}
+
+#Intro {
+    position: relative;
+    float: right;
+    font-family: 'Otomanopee One', sans-serif;
+}
+
+
+/*---------------------------------------- Images Frame ----------------------------------------*/
+
+#ImagesFrame {
+    position: relative;
+    width: 70%;
+    height: 600px;
+    right: -500px;
+}
+
+#ImagesFrame img {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    top: 50px;
+    border-radius: 50px;
+    padding-left: 20px;
+}
+
+#showButton {
+    box-shadow: 24px 8px 21px -6px #276873;
+    background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+    background-color: #599bb3;
+    border-radius: 26px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Verdana;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 20px 41px;
+    text-decoration: none;
+    text-shadow: 0px 0px 0px #3d768a;
+    margin-top: 180px;
+    margin-left: 200px;
+}
+
+#showButton:hover {
+    background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+    background-color: #408c99;
+}
+
+#showButton:active {
+    position: relative;
+    top: 1px;
+}
+
+
+/*---------------------------------------- Results Frame ----------------------------------------*/
+
+#Results {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-image: url('https://media.giphy.com/media/3oz8xwBsjn7tp2HgGI/giphy.gif');
+    display: none;
+    border-radius: 25px;
+    text-transform: capitalize;
+    font-family: 'Otomanopee One', sans-serif;
+    width: 500px;
+}
+
+#Results ul {
+    list-style-type: none;
+    background-repeat: repeat-x;
+    padding: 0px 10px 20px 30px;
+    margin: 0px;
+}
+
+#Results ul li {
+    font-size: 16px;
+}
+
+#Results h4 {
+    font-size: 20px;
+    margin-left: 30px;
+}
