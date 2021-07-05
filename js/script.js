@@ -1,6 +1,8 @@
 'use strict';
 
 Item.objectsContainer = [];
+let productNameArr = [];
+
 
 function Item(productName, sourceLink) {
     this.productName = productName;
@@ -9,6 +11,7 @@ function Item(productName, sourceLink) {
     this.clickTimes = 0;
     this.clickPerShowPercantage = 0;
     Item.objectsContainer.push(this);
+    productNameArr.push(this.productName);
 };
 
 Item.prototype.clickPerVeiwsPercantagefn = function() {
@@ -38,7 +41,7 @@ new Item('wine-glass', 'images/wine-glass.jpg');
 
 /*---------------------------------------- Rendering Images ----------------------------------------*/
 function randomizer() {
-    return Math.floor(Math.random() * Item.objectsContainer.length);
+    return Math.floor(Math.random() * (Item.objectsContainer.length - 1));
 };
 
 let leftElement = document.getElementById('leftElement');
@@ -49,20 +52,26 @@ let leftIndex;
 let centerIndex
 let rightIndex;
 
+let instances = [];
+
+
 function renderThreeImages() {
 
-    leftIndex = randomizer();
-    centerIndex = randomizer();
-    rightIndex = randomizer();
-    while (leftIndex == centerIndex || centerIndex == rightIndex || rightIndex == leftIndex) {
+    do {
         leftIndex = randomizer();
         centerIndex = randomizer();
         rightIndex = randomizer();
-    }
+    } while (instances.includes(leftIndex) || instances.includes(centerIndex) || instances.includes(rightIndex) || leftIndex == centerIndex || centerIndex == rightIndex || rightIndex == leftIndex || instances.includes(leftIndex) || instances.includes(centerIndex) || instances.includes(rightIndex));
+
+
+    instances = [];
+    instances.push(leftIndex, centerIndex, rightIndex);
+    console.log(instances);
 
     leftElement.src = Item.objectsContainer[leftIndex].sourceLink;
     centerELement.src = Item.objectsContainer[centerIndex].sourceLink;
     rightElement.src = Item.objectsContainer[rightIndex].sourceLink;
+
 
     Item.objectsContainer[leftIndex].shownTimes++;
     Item.objectsContainer[centerIndex].shownTimes++;
@@ -71,6 +80,8 @@ function renderThreeImages() {
     Item.objectsContainer[leftIndex].clickPerVeiwsPercantagefn();
     Item.objectsContainer[centerIndex].clickPerVeiwsPercantagefn();
     Item.objectsContainer[rightIndex].clickPerVeiwsPercantagefn();
+
+
     console.log(Item.objectsContainer);
 };
 
@@ -87,7 +98,7 @@ rightElement.addEventListener('click', handleClick);
 function handleClick(event) {
     let resultShowButton = document.getElementById("showButton");
     counter++;
-    if (counter <= maxAttempts) {
+    if (counter < maxAttempts) {
 
         if (event.target.id === 'leftElement') {
 
@@ -105,9 +116,9 @@ function handleClick(event) {
         Item.objectsContainer[centerIndex].clickPerVeiwsPercantagefn();
         Item.objectsContainer[rightIndex].clickPerVeiwsPercantagefn();
         renderThreeImages();
-    } else {
+    } else if (maxAttempts == 25) {
         resultShowButton.style.display = "block";
-    }
+    };
 }
 
 
@@ -116,18 +127,81 @@ let resultFrame = document.getElementById('Results')
 let resultShowButton = document.getElementById('showButton');
 resultShowButton.addEventListener('click', renderResults);
 
+let clickTimesArr = [];
+let shownTimesArr = [];
+
 function renderResults() {
 
     for (let i = 0; i < Item.objectsContainer.length; i++) {
+        clickTimesArr.push(Item.objectsContainer[i].clickTimes);
+        shownTimesArr.push(Item.objectsContainer[i].shownTimes);
         let UnorderedList = document.getElementById('UnorderedList');
         let list = document.createElement('li');
         UnorderedList.appendChild(list);
         list.textContent = `${Item.objectsContainer[i].productName} : Picked (${Item.objectsContainer[i].clickTimes}) Seen (${Item.objectsContainer[i].shownTimes}) percentage (${Item.objectsContainer[i].clickPerShowPercantage}%) `
 
     }
+    console.log(clickTimesArr);
     resultShowButton.removeEventListener('click', renderResults);
     resultShowButton.removeEventListener('click', renderResults);
     resultShowButton.removeEventListener('click', renderResults);
     resultFrame.style.display = "block";
+    renderChart();
 
 };
+
+/*---------------------------------------- Chart Event ----------------------------------------*/
+
+function renderChart() {
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+
+        data: {
+            datasets: [{
+                type: 'bar',
+                label: 'Shown Times',
+                data: shownTimesArr,
+                order: 1,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                borderWidth: 1
+            }, {
+
+                type: 'bar',
+                label: 'Picked Times',
+                data: clickTimesArr,
+                order: 2,
+                backgroundColor: [
+                    'rgba(99, 255, 132, 0.2)',
+                ],
+
+                borderWidth: 1
+            }],
+            labels: productNameArr,
+
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'The Results of showing and clicking by the user'
+                },
+            },
+            responsive: true,
+            interaction: {
+                intersect: false,
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    beginAtZero: true,
+                    stacked: true,
+                }
+            }
+        }
+    });
+}
