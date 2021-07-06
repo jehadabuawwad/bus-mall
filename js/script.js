@@ -1,8 +1,8 @@
 'use strict';
 
+/*---------------------------------------- Constructer Function Block ----------------------------------------*/
 Item.objectsContainer = [];
 let productNameArr = [];
-
 
 function Item(productName, sourceLink) {
     this.productName = productName;
@@ -14,32 +14,20 @@ function Item(productName, sourceLink) {
     productNameArr.push(this.productName);
 };
 
-Item.prototype.clickPerVeiwsPercantagefn = function() {
-    this.clickPerShowPercantage = Math.round((this.clickTimes * 100) / this.shownTimes);
+/*---------------------------------------- Instances of Constructer Functon ----------------------------------------*/
 
+let listOfImagesNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
+
+let listOfImagesLinks = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg',
+    'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.png',
+    'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/water-can.jpg', 'images/wine-glass.jpg'
+];
+
+for (let i = 0; i < listOfImagesNames.length; i++) {
+    new Item(listOfImagesNames[i], listOfImagesLinks[i]);
 };
 
-new Item('bag', 'images/bag.jpg');
-new Item('banana', 'images/banana.jpg');
-new Item('bathroom', 'images/bathroom.jpg');
-new Item('boots', 'images/boots.jpg');
-new Item('breakfast', 'images/breakfast.jpg');
-new Item('bubblegum', 'images/bubblegum.jpg');
-new Item('chair', 'images/chair.jpg');
-new Item('cthulhu', 'images/cthulhu.jpg');
-new Item('dog-duck', 'images/dog-duck.jpg');
-new Item('dragon', 'images/dragon.jpg');
-new Item('pen', 'images/pen.jpg');
-new Item('pet-sweep', 'images/pet-sweep.jpg');
-new Item('scissors', 'images/scissors.jpg');
-new Item('shark', 'images/shark.jpg');
-new Item('sweep', 'images/sweep.png');
-new Item('tauntaun', 'images/tauntaun.jpg');
-new Item('unicorn', 'images/unicorn.jpg');
-new Item('water-can', 'images/water-can.jpg');
-new Item('wine-glass', 'images/wine-glass.jpg');
-
-/*---------------------------------------- Rendering Images ----------------------------------------*/
+/*---------------------------------------- [Rendering Images] [Modify] source Shown Percantage  ----------------------------------------*/
 function randomizer() {
     return Math.floor(Math.random() * (Item.objectsContainer.length - 1));
 };
@@ -48,12 +36,8 @@ let leftElement = document.getElementById('leftElement');
 let centerELement = document.getElementById('centerElement');
 let rightElement = document.getElementById('rightElement');
 
-let leftIndex;
-let centerIndex
-let rightIndex;
-
+let leftIndex, centerIndex, rightIndex;
 let instances = [];
-
 
 function renderThreeImages() {
 
@@ -64,30 +48,25 @@ function renderThreeImages() {
     } while (instances.includes(leftIndex) || instances.includes(centerIndex) || instances.includes(rightIndex) || leftIndex == centerIndex || centerIndex == rightIndex || rightIndex == leftIndex || instances.includes(leftIndex) || instances.includes(centerIndex) || instances.includes(rightIndex));
 
 
+    let LeftInstance = Item.objectsContainer[leftIndex];
+    let centerInstance = Item.objectsContainer[centerIndex];
+    let rightInstance = Item.objectsContainer[rightIndex];
+
     instances = [];
     instances.push(leftIndex, centerIndex, rightIndex);
-    console.log(instances);
 
-    leftElement.src = Item.objectsContainer[leftIndex].sourceLink;
-    centerELement.src = Item.objectsContainer[centerIndex].sourceLink;
-    rightElement.src = Item.objectsContainer[rightIndex].sourceLink;
+    leftElement.src = LeftInstance.sourceLink;
+    centerELement.src = centerInstance.sourceLink;
+    rightElement.src = rightInstance.sourceLink;
 
-
-    Item.objectsContainer[leftIndex].shownTimes++;
-    Item.objectsContainer[centerIndex].shownTimes++;
-    Item.objectsContainer[rightIndex].shownTimes++;
-
-    Item.objectsContainer[leftIndex].clickPerVeiwsPercantagefn();
-    Item.objectsContainer[centerIndex].clickPerVeiwsPercantagefn();
-    Item.objectsContainer[rightIndex].clickPerVeiwsPercantagefn();
-
-
-    console.log(Item.objectsContainer);
+    LeftInstance.shownTimes++;
+    centerInstance.shownTimes++;
+    rightInstance.shownTimes++;
 };
 
 renderThreeImages();
 
-/*---------------------------------------- Clicking On Picture Event ----------------------------------------*/
+/*-------------------- s [Modify] ClickTimes [Invoke] RenderThreeImages [Display] Button --------------------*/
 const maxAttempts = 25;
 let counter = 0;
 
@@ -96,33 +75,36 @@ centerELement.addEventListener('click', handleClick);
 rightElement.addEventListener('click', handleClick);
 
 function handleClick(event) {
+    let LeftInstance = Item.objectsContainer[leftIndex];
+    let centerInstance = Item.objectsContainer[centerIndex];
+    let rightInstance = Item.objectsContainer[rightIndex];
+
     let resultShowButton = document.getElementById("showButton");
     counter++;
     if (counter < maxAttempts) {
 
         if (event.target.id === 'leftElement') {
-
-            Item.objectsContainer[leftIndex].clickTimes += 1;
-
+            LeftInstance.clickTimes += 1;
         } else if (event.target.id === 'centerElement') {
-
-            Item.objectsContainer[centerIndex].clickTimes += 1;
+            centerInstance.clickTimes += 1;
         } else if (event.target.id === 'rightElement') {
-
-            Item.objectsContainer[rightIndex].clickTimes += 1;
+            rightInstance.clickTimes += 1;
         }
 
-        Item.objectsContainer[leftIndex].clickPerVeiwsPercantagefn();
-        Item.objectsContainer[centerIndex].clickPerVeiwsPercantagefn();
-        Item.objectsContainer[rightIndex].clickPerVeiwsPercantagefn();
         renderThreeImages();
+
+        LeftInstance.clickPerShowPercantage = Math.round((LeftInstance.clickTimes * 100) / LeftInstance.shownTimes);
+        centerInstance.clickPerShowPercantage = Math.round((centerInstance.clickTimes * 100) / centerInstance.shownTimes);
+        rightInstance.clickPerShowPercantage = Math.round((rightInstance.clickTimes * 100) / rightInstance.shownTimes);
+
     } else if (maxAttempts == 25) {
         resultShowButton.style.display = "block";
     };
 }
 
 
-/*---------------------------------------- Showing Results Event ----------------------------------------*/
+/*--------------- [[RenderResults Event]] forloop [Remove] EventsListener [Invoke] PushToLocalStorage renderChart---------------*/
+
 let resultFrame = document.getElementById('Results')
 let resultShowButton = document.getElementById('showButton');
 resultShowButton.addEventListener('click', renderResults);
@@ -139,18 +121,20 @@ function renderResults() {
         let list = document.createElement('li');
         UnorderedList.appendChild(list);
         list.textContent = `${Item.objectsContainer[i].productName} : Picked (${Item.objectsContainer[i].clickTimes}) Seen (${Item.objectsContainer[i].shownTimes}) percentage (${Item.objectsContainer[i].clickPerShowPercantage}%) `
-
     }
-    console.log(clickTimesArr);
-    resultShowButton.removeEventListener('click', renderResults);
-    resultShowButton.removeEventListener('click', renderResults);
-    resultShowButton.removeEventListener('click', renderResults);
-    resultFrame.style.display = "block";
-    renderChart();
 
+    resultFrame.style.display = "block";
+
+    resultShowButton.removeEventListener('click', renderResults);
+    leftElement.removeEventListener('click', handleClick);
+    centerELement.removeEventListener('click', handleClick);
+    rightElement.removeEventListener('click', handleClick);
+
+    pushToLocalStorage();
+    renderChart();
 };
 
-/*---------------------------------------- Chart Event ----------------------------------------*/
+/*---------------------------------------- [Render Chart] ----------------------------------------*/
 
 function renderChart() {
 
@@ -205,3 +189,22 @@ function renderChart() {
         }
     });
 }
+
+
+/*---------------------------------------- [Local Storage]----------------------------------------*/
+
+function pushToLocalStorage() {
+    let stringfiedInstances = JSON.stringify(Item.objectsContainer);
+    localStorage.setItem("Item", stringfiedInstances);
+};
+
+function pullFromLocalStorage() {
+    let instances = localStorage.getItem("Item");
+    let ParsiedInstances = JSON.parse(instances);
+    if (ParsiedInstances != null) {
+        Item.objectsContainer = ParsiedInstances;
+    };
+
+};
+
+pullFromLocalStorage();
