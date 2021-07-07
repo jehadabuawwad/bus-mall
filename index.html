@@ -7,11 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bus Mall</title>
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <script src="js/script.js"></script>
+
+    <section id="ImagesFrame">
+        <img id="leftElement" src="" alt="">
+        <img id="centerElement" src=" " alt=" ">
+        <img id="rightElement" src=" " alt=" ">
+        <button id="showButton" style="display :none;">Show Results</button>
+    </section>
+
+    <section id="Results">
+        <h4>The Users selected these Products many times as the following</h4>
+        <ul id="UnorderedList">
+        </ul>
+    </section>
+
+    <section id="Chart">
+        <canvas id="myChart"></canvas>
+    </section>
+
+    <h1 id="Intro">Select a product from these choices please..</h1>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/script.js "></script>
 </body>
 
 </html>

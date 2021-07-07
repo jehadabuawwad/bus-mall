@@ -1,0 +1,106 @@
+body {
+    background-image: url('https://media.giphy.com/media/g64UPbSmTYtYQ/giphy.gif');
+    background-repeat: repeat-x;
+    background-position: right bottom;
+    height: 930px;
+    background-color: #fffffe;
+}
+
+#Intro {
+    position: absolute;
+    bottom: 100px;
+    right: 50px;
+    float: right;
+    font-family: 'Otomanopee One', sans-serif;
+}
+
+
+/*---------------------------------------- Images Frame ----------------------------------------*/
+
+#ImagesFrame {
+    position: absolute;
+    width: 60%;
+    height: 600px;
+    right: 100px;
+}
+
+#ImagesFrame img {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    top: 50px;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+#showButton {
+    position: absolute;
+    box-shadow: 24px 8px 21px -6px #276873;
+    background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+    background-color: #599bb3;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: 'Otomanopee One', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 20px 41px;
+    text-decoration: none;
+    text-shadow: 0px 0px 0px #3d768a;
+    bottom: 50px;
+    left: 800px;
+}
+
+#showButton:hover {
+    background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+    background-color: #408c99;
+}
+
+#showButton:active {
+    position: absolute;
+    bottom: 55px;
+}
+
+
+/*---------------------------------------- Results Frame ----------------------------------------*/
+
+#Results {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    background-image: url('https://media.giphy.com/media/3oz8xwBsjn7tp2HgGI/giphy.gif');
+    display: none;
+    border-radius: 0px;
+    text-transform: capitalize;
+    font-family: 'Otomanopee One', sans-serif;
+    width: 500px;
+    opacity: 0.85;
+}
+
+#Results ul {
+    list-style-type: none;
+    background-repeat: repeat-x;
+    padding: 0px 10px 20px 30px;
+    margin: 0px;
+}
+
+#Results ul li {
+    font-size: 16px;
+}
+
+#Results h4 {
+    font-size: 20px;
+    margin-left: 30px;
+}
+
+
+/*---------------------------------------- Chart Frame ----------------------------------------*/
+
+#Chart {
+    position: absolute;
+    bottom: 250px;
+    left: 550px;
+    width: 700px;
+    height: 300px;
+}
